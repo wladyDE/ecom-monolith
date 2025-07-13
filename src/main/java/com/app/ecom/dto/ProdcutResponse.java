@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserResponse {
+public class ProdcutResponse {
     private Long id;
     private String firstName;
     private String lastName;
