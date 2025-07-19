@@ -1,7 +1,7 @@
 package com.app.ecom.service;
 
 import com.app.ecom.dto.UserRequest;
-import com.app.ecom.dto.ProdcutResponse;
+import com.app.ecom.dto.UserResponse;
 import com.app.ecom.model.UserRole;
 import com.app.ecom.repository.ProductRepository;
 import com.app.ecom.repository.UserRepository;
@@ -21,17 +21,17 @@ public class UserService {
     private final ProductRepository productRepository;
 
 
-    public List<ProdcutResponse> fetchAllUsers() {
+    public List<UserResponse> fetchAllUsers() {
         return userRepository.findAll().stream()
                 .map(this::mapUserToUserResponse)
                 .collect(Collectors.toList());
     }
 
-    public Optional<ProdcutResponse> fetchUser(Long id) {
+    public Optional<UserResponse> fetchUser(Long id) {
         return userRepository.findById(id).map(this::mapUserToUserResponse);
     }
 
-    public Optional<ProdcutResponse> updateUser(Long id, UserRequest userRequest) {
+    public Optional<UserResponse> updateUser(Long id, UserRequest userRequest) {
         return userRepository.findById(id).map(user -> {
             updateExistingUser(user, userRequest);
             return userRepository.save(user);
@@ -46,7 +46,7 @@ public class UserService {
         user.setAddress(userRequest.getAddress());
     }
 
-    public ProdcutResponse createUser(UserRequest userRequest) {
+    public UserResponse createUser(UserRequest userRequest) {
         return mapUserToUserResponse(userRepository.save(mapUserRequestToUser(userRequest)));
     }
 
@@ -61,8 +61,8 @@ public class UserService {
                 .build();
     }
 
-    private ProdcutResponse mapUserToUserResponse(User user) {
-        return ProdcutResponse.builder()
+    private UserResponse mapUserToUserResponse(User user) {
+        return UserResponse.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
